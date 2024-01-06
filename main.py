@@ -21,6 +21,15 @@ guessed_states = []
 while len(guessed_states) < TOTAL_STATES:
     answer_state = screen.textinput(f"{len(guessed_states)}/50 States Correct",
                                     "What's another state's name").title()
+
+    if answer_state == "Exit":
+        states_to_learn = []
+        for state in all_states:
+            if state not in guessed_states:
+                states_to_learn.append(state)
+        new_data = pandas.DataFrame(states_to_learn)
+        new_data.to_csv("states_to_learn.csv")
+        break
     if answer_state in all_states:
         state_data = data[data["state"] == answer_state]
         x = state_data.x.item()
@@ -32,30 +41,3 @@ while len(guessed_states) < TOTAL_STATES:
         print(f"{answer_state} is not a U.S. State")
 
 screen.exitonclick()
-
-
-
-
-# How to record mouse clicks on map
-# def get_mouse_click_coord(x, y):
-#     print(x,y)
-#
-#
-# screen.onscreenclick(get_mouse_click_coord)
-# turtle.mainloop()
-
-
-# import pandas
-# data = pandas.read_csv("Squirrel_Data.csv")
-# grey_squirrels = data[data["Primary Fur Color"] == 'Gray']
-# red_squirrels = data[data["Primary Fur Color"] == 'Cinnamon']
-# black_squirrels = data[data["Primary Fur Color"] == 'Black']
-# count_grey = len(grey_squirrels)
-# count_red = len(red_squirrels)
-# count_black = len(black_squirrels)
-# d = {
-#     "Fur Color": ["grey", "red", "black"],
-#     "Count": [count_grey, count_red, count_black]
-# }
-# new_dataset = pandas.DataFrame(d)
-# new_dataset.to_csv("new_dataset.csv")
